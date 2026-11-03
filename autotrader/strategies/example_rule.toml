@@ -1,0 +1,16 @@
+# A no-code strategy. Copy this file, change the rules, run `python -m autotrader validate`.
+# Names: open high low close volume + anything in [params].
+# Functions: sma ema rsi atr highest lowest roc zscore volatility bb_upper bb_lower
+#            cross_above cross_below prev abs
+name = "golden_cross_pullback"
+description = "Buy pullbacks to the 20-day MA while the 50-day is above the 200-day."
+entry = "sma(close, 50) > sma(close, 200) and close < sma(close, fast) and rsi(close, 3) < oversold"
+exit = "close > highest(high, 10) or sma(close, 50) < sma(close, 200)"
+
+[params]
+fast = 20
+oversold = 20
+
+[grid]
+fast = [10, 20]
+oversold = [15, 25]
